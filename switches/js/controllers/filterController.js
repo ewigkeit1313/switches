@@ -2,10 +2,7 @@
 
 Switches.controller('filterController', function ($scope, $http) {
     $scope.Work = function () {
-        $http.get("/home/getListSwitches").then(function(response){
-            $scope.switches = response;
-        });
-        $http.get("/home/test").then(
+        $http.get("/home/getListSwitches").then(
                 function (response) {
                     $scope.switches = response.data;
                 },
