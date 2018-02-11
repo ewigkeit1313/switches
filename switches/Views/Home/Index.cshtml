@@ -35,6 +35,11 @@
                     <td><a class="btn btn-warning" href="/Home/Delete/{{s.Id}}">Удалить</a></td>
                 </tr>
             </table>
-        </div>
+
+                <ul class="pagination">
+                    <li ng-repeat="b in [] | range:pages">
+                        <a href="#" ng-click="Work($index)">{{$index}}</a>
+                    </li>
+                </ul>
     </div>
 </div>
