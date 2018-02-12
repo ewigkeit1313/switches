@@ -5,16 +5,39 @@ Switches.controller('filterController', function ($scope, $http) {
     $scope.pages = 0;
     $scope.curentPage = 0;
 
+    var options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    };
+
+    $scope.parseJsonDate = function (date) {
+        var CleanDate = new Date(parseInt(date.substr(6)));
+        return CleanDate.toLocaleString("ru", options);
+    }
+
+    $scope.DateOut = function (array) {
+        if (array != null) {
+            for (d in array) {
+                array[d]['DateInstallation'] = $scope.parseJsonDate(array[d]['DateInstallation']);
+            }
+            return array;
+        }
+    }
+
+
     $scope.totalPage = function (arrSwitches) {
         if (arrSwitches == null) {
             return;
         }
         var ostatok = Math.floor(arrSwitches / $scope.switchesOnPage);
-        //var drob = getDecimal(arrSwitches / $scope.switchesOnPage);
+
         if (ostatok >= 1) {
             $scope.pages = ostatok;
-        }
-                
+        }                
         if (arrSwitches % $scope.switchesOnPage > 0) {
             $scope.pages = ostatok+1;
         }
@@ -22,8 +45,8 @@ Switches.controller('filterController', function ($scope, $http) {
 
     $scope.Work = function (curentPage) {
         $http.get("/home/getListSwitches").then(
-                function (response) {
-                    $scope.pageFilter(response.data, curentPage, $scope.switchesOnPage);
+            function (response) {
+                    $scope.pageFilter($scope.DateOut(response.data), curentPage, $scope.switchesOnPage);
                     $scope.totalPage(response.data.length);
                 },
                 function (response) {
