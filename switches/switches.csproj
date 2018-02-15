@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201802070500183_Init.Designer.cs">
       <DependentUpon>201802070500183_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802120640277_valid.cs" />
+    <Compile Include="Migrations\201802120640277_valid.Designer.cs">
+      <DependentUpon>201802120640277_valid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Switch.cs" />
     <Compile Include="Models\SwitchContext.cs" />
@@ -1073,6 +1077,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201802070500183_Init.resx">
       <DependentUpon>201802070500183_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802120640277_valid.resx">
+      <DependentUpon>201802120640277_valid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

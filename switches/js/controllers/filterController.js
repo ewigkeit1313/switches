@@ -4,14 +4,11 @@ Switches.controller('filterController', function ($scope, $http) {
     $scope.switchesOnPage = 5;
     $scope.pages = 0;
     $scope.curentPage = 0;
-
+    
     var options = {
         year: 'numeric',
         month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
+        day: '2-digit'
     };
 
     $scope.parseJsonDate = function (date) {
@@ -46,6 +43,7 @@ Switches.controller('filterController', function ($scope, $http) {
     $scope.Work = function (curentPage) {
         $http.get("/home/getListSwitches").then(
             function (response) {
+                    $scope.AllSwitches = response.data;
                     $scope.pageFilter($scope.DateOut(response.data), curentPage, $scope.switchesOnPage);
                     $scope.totalPage(response.data.length);
                 },
@@ -55,6 +53,18 @@ Switches.controller('filterController', function ($scope, $http) {
         );
     }
     $scope.Work($scope.curentPage);
+
+    $scope.getModels = function () {
+        $http.get("/home/getModels").then(
+            function (response) {
+                $scope.models = response.data;
+            }
+        )
+    }
+
+
+    $scope.Work($scope.curentPage);
+    $scope.getModels();
 
 
 
@@ -76,4 +86,24 @@ Switches.filter('range', function () {
 
         return input;
     };
+});
+
+
+
+Switches.filter('filterForSwitches', function () {
+    return function (onPageSwitches, modelsArr, switchesArr) {
+        if (!modelsArr) {
+            return onPageSwitches;
+        }
+        var resArr = [];
+
+        for (i = 0; i < switchesArr.length; i++) {
+            for (j = 0; j < modelsArr.length; j++) {
+                if (switchesArr[i].Model == modelsArr[j]) {
+                    resArr.push(switchesArr[i]);
+                }
+            }
+        }
+        return resArr;
+    }
 });

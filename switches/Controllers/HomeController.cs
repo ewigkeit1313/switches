@@ -87,5 +87,10 @@ namespace switches.Controllers
         }
 
 
+        [Route("home/getModels")]
+        public JsonResult getModels() {
+            var Models = db.Switches.Select(x => x.Model).Distinct().ToList();
+            return Json(Models, JsonRequestBehavior.AllowGet);
+        }
     }
 }

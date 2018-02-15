@@ -8,39 +8,67 @@
 <script src="~/js/controllers/filterController.js"></script>
 
 
-<div class="row" ng-app="Switches">
-   <div class="col-md-12">
-        <h3>Все коммутаторы</h3>
 
-        <div ng-controller="filterController">
-            <table class="table">
-                <tr>
-                    <th>Id</th>
-                    <th>Модель</th>
-                    <th>Ip адрес</th>
-                    <th>Mac-адрес</th>
-                    <th>Дата установки</th>
-                    <th>Серийный номер</th>
-                    <th><a class="btn btn-success" href="/Home/AddSwitch">Добавить</a></th>
-                    <th>Удалить</th>
-                </tr>
-                <tr ng-repeat="s in switches">
-                    <td>{{s.Id}}</td>
-                    <td>{{s.Model}}</td>
-                    <td>{{s.Ip}}</td>
-                    <td>{{s.Mac}}</td>
-                    <td>{{s.DateInstallation}}</td>
-                    <td>{{s.Serial}}</td>
-                    <td><a class="btn btn-info" href="/Home/EditSwitch/{{s.Id}}">Посмотреть/Изменить</a></td>
-                    <td><a class="btn btn-warning" href="/Home/Delete/{{s.Id}}">Удалить</a></td>
-                </tr>
-            </table>
+<div ng-app="Switches">
+    <div ng-controller="filterController">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Все коммутаторы</h3>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select class="form-control" multiple ng-model="selectedModels" ng-options="s for s in models"></select>
+                </div>
+            </div>
+
+            <div class="col-md-4 pull-left">
+                <div class="btn btn-default" data-ng-click="selectedModels=''">Отчистить фильтр</div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <tr>
+                        <th>Id</th>
+                        <th>Модель</th>
+                        <th>Ip адрес</th>
+                        <th>Mac-адрес</th>
+                        <th>Дата установки</th>
+                        <th>Серийный номер</th>
+                        <th><a class="btn btn-success" href="/Home/AddSwitch">Добавить</a></th>
+                        <th>Удалить</th>
+                    </tr>
+                    <tr ng-repeat="s in switches | filterForSwitches : selectedModels : AllSwitches">
+                        <td>{{s.Id}}</td>
+                        <td>{{s.Model}}</td>
+                        <td>{{s.Ip}}</td>
+                        <td>{{s.Mac}}</td>
+                        <td>{{s.DateInstallation}}</td>
+                        <td>{{s.Serial}}</td>
+                        <td><a class="btn btn-info" href="/Home/EditSwitch/{{s.Id}}">Посмотреть/Изменить</a></td>
+                        <td><a class="btn btn-warning" href="/Home/Delete/{{s.Id}}">Удалить</a></td>
+                    </tr>
+                </table>
 
                 <ul class="pagination">
                     <li ng-repeat="b in [] | range:pages">
                         <a href="#" ng-click="Work($index)">{{$index}}</a>
                     </li>
                 </ul>
+            </div>
         </div>
+
+
+
+
+
     </div>
 </div>

@@ -54,7 +54,7 @@
             <div class="control-label col-md-2 h5">Дата покупки</div>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DateBuy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateBuy, "GFHFGHFGh", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.DateBuy, "", new { @class = "text-danger" })
             </div>
         </div>
 
