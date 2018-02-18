@@ -3,11 +3,8 @@
 }
 <script src="~/Scripts/angular.min.js"></script>
 <script src="~/Scripts/angular-route.js"></script>
-
 <script src="~/js/Switches.js"></script>
 <script src="~/js/controllers/filterController.js"></script>
-
-
 
 <div ng-app="Switches">
     <div ng-controller="filterController">
@@ -18,20 +15,24 @@
             </div>
         </div>
 
-
-        <div class="row">
-            <div class="col-md-4">
+        <div ng-hide="!models.length && !floors.length">
+            <form class="form-inline form-group" role="form">
                 <div class="form-group">
+                    <label>Модель</label>
                     <select class="form-control" multiple ng-model="selectedModels" ng-options="s for s in models"></select>
                 </div>
-            </div>
 
-            <div class="col-md-4 pull-left">
-                <div class="btn btn-default" data-ng-click="selectedModels=''">Отчистить фильтр</div>
-            </div>
+                <div class="form-group">
+                    <label>Этаж</label>
+                    <select class="form-control" multiple ng-model="selectedFloors" ng-options="f for f in floors"></select>
+                </div>
 
+                <div class="form-group">
+                    <div class="btn btn-default" ng-click="selectedModels=''; selectedFloors=''; Work('init',curentPage)">Отчистить фильтр</div>
+                    <div class="btn btn-default" ng-click="getFilterSwitches(selectedModels,selectedFloors)">Отфильтровать</div>
+                </div>
+            </form>
         </div>
-
 
         <div class="row">
             <div class="col-md-12">
@@ -41,17 +42,15 @@
                         <th>Модель</th>
                         <th>Ip адрес</th>
                         <th>Mac-адрес</th>
-                        <th>Дата установки</th>
                         <th>Серийный номер</th>
                         <th><a class="btn btn-success" href="/Home/AddSwitch">Добавить</a></th>
                         <th>Удалить</th>
                     </tr>
-                    <tr ng-repeat="s in switches | filterForSwitches : selectedModels : AllSwitches">
+                    <tr ng-repeat="s in switches">
                         <td>{{s.Id}}</td>
                         <td>{{s.Model}}</td>
                         <td>{{s.Ip}}</td>
                         <td>{{s.Mac}}</td>
-                        <td>{{s.DateInstallation}}</td>
                         <td>{{s.Serial}}</td>
                         <td><a class="btn btn-info" href="/Home/EditSwitch/{{s.Id}}">Посмотреть/Изменить</a></td>
                         <td><a class="btn btn-warning" href="/Home/Delete/{{s.Id}}">Удалить</a></td>
@@ -60,15 +59,10 @@
 
                 <ul class="pagination">
                     <li ng-repeat="b in [] | range:pages">
-                        <a href="#" ng-click="Work($index)">{{$index}}</a>
+                        <a href="#" ng-click="Work(AllSwitches,$index)">{{$index}}</a>
                     </li>
                 </ul>
             </div>
         </div>
-
-
-
-
-
     </div>
 </div>

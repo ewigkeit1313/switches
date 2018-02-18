@@ -71,7 +71,8 @@ namespace switches.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int Id) {
+        public ActionResult DeleteConfirmed(int Id)
+        {
             Switch Switch = db.Switches.Find(Id);
             db.Switches.Remove(Switch);
             db.SaveChanges();
@@ -79,7 +80,7 @@ namespace switches.Controllers
         }
 
         [Route("home/getListSwitches")]
-        public JsonResult getListSwitches()
+        public JsonResult GetListSwitches()
         {
             var Switches = db.Switches.ToList();
 
@@ -88,9 +89,24 @@ namespace switches.Controllers
 
 
         [Route("home/getModels")]
-        public JsonResult getModels() {
+        public JsonResult GetModels()
+        {
             var Models = db.Switches.Select(x => x.Model).Distinct().ToList();
             return Json(Models, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("home//home/getFloors")]
+        public JsonResult GetFloors()
+        {
+            var Floors = db.Switches.Select(x => x.Floor).Distinct().ToList();
+            return Json(Floors, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("home/getFilterSwitches")]
+        public JsonResult GetFilterSwitches(string[] models, string[] floors)
+        {
+            var filterResult = db.Switches.Where(x => models.Contains(x.Model) && floors.Contains(x.Floor)).ToList();
+            return Json(filterResult, JsonRequestBehavior.AllowGet);
         }
     }
 }

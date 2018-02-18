@@ -40,20 +40,22 @@ namespace Switches.Models
 
         [Required(ErrorMessage = "Дата покупки")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "Дата покупки")]
         public DateTime DateBuy { get; set; }
 
 
         [Required(ErrorMessage = "Дата установки")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "Дата установки")]
         public DateTime DateInstallation{ get; set; }
 
 
         [Required(ErrorMessage = "Этаж")]
-        [Range(-5, 256)]
         [Display(Name = "Этаж")]
-        public int Floor { get; set; }
+        [StringLength(3, MinimumLength = 1, ErrorMessage = "Длина строки должна быть от 1 до 3 символов")]
+        public string Floor { get; set; }
 
 
         public string Сomment { get; set; }
